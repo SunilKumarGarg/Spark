@@ -1,0 +1,33 @@
+1. From shell interpreter run:
+
+	Copy file to hadoop:
+	hadoop fs -put /usr/hdp/project/word_count.txt /tmp
+
+	get File from hadoop:
+	hadoop fs -get /tmp/word /tmp
+
+	hadoop fs -get/-put fromLocation toLocation
+
+2. Run spark from this location:
+
+	cd /usr/hdp/current/spark-client
+
+pyspark
+
+lines = sc.textFile("/tmp/word_count.txt")
+line = lines.flatMap(lambda s: s.split(" ")).map(lambda s: (s,1)).reduceByKey(lambda a, b: a+b)
+line.collect()
+
+
+In python file just add lines to import spark context (in spark shell it is created by default)
+
+spark-submit python_file_name(local)
+
+File name in application is refer to the file location in hadoop because hadoop environment is set here.
+
+To browse HDFS file system, go to http://127.0.0.1:50070
+
+
+
+
+
